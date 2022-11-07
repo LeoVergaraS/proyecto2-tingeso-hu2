@@ -14,11 +14,11 @@ import com.app.justificativoservice.entity.Inasistencia;
 public interface InasistenciaRepository extends JpaRepository<Inasistencia, Long> {
         @Transactional
         @Modifying
-        @Query(value = "UPDATE inasistencias i SET i.dias_justificados = :d WHERE i.id = :id",
+        @Query(value = "UPDATE inasistencias i SET i.justificative = :d WHERE i.id = :id",
         nativeQuery = true)
         void updateDiasJustificados(@Param("d") int d, @Param("id") long id);
 
-        @Query(value = "select * from inasistencias i where i.rut_empleado = :rut and i.mes = :mes and i.anio = :anio",
+        @Query(value = "select * from inasistencias i where i.rut = :rut and i.mounth = :mes and i.year = :anio",
         nativeQuery = true)
         Inasistencia findInasistenciaByRutFecha(@Param("rut") String rut, @Param("mes") int mes, @Param("anio") int anio);
 }
