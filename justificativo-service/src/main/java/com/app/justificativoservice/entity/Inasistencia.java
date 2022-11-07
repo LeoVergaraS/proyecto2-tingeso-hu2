@@ -1,4 +1,4 @@
-package com.app.justificativoservice.entities;
+package com.app.justificativoservice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class Inasistencia {
 
     private int mes;
     private int anio;
-    private int cantidad_de_dias;
-    private int dias_justificados;
-    private String rut_empleado;
+    private int cantidadDias;
+    private int diasJustificados;
+    private String rutEmpleado;
 }
