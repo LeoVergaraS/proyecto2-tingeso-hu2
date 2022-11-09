@@ -22,7 +22,8 @@ public class InasistenciaService {
     }
 
     public Inasistencia guardarInasistencia(Inasistencia inasistencia) {
-        return inasistenciaRepository.save(inasistencia);
+        Inasistencia nuevaInasistencia = inasistenciaRepository.save(inasistencia);
+        return nuevaInasistencia;
     }
     
     public Inasistencia obtenerInasistenciaPorEmpleadoYFecha(int mes, int anio, String rut){

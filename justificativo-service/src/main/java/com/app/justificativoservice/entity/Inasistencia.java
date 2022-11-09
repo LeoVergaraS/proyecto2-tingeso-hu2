@@ -17,9 +17,9 @@ public class Inasistencia {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private int month;
-    private int year;
-    private int mountOfDays;
-    private int justificative;
-    private String rut;
+    private int mes;
+    private int anio;
+    private int cantidadDias;
+    private int diasJustificados;
+    private String rutEmpleado;
 }

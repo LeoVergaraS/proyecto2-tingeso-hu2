@@ -30,7 +30,7 @@ public class InasistenciaController {
         return ResponseEntity.ok(inasistencia);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Inasistencia> create(@RequestBody Inasistencia inasistencia){
         Inasistencia nuevInasistencia = inasistenciaService.guardarInasistencia(inasistencia);
         return ResponseEntity.ok(nuevInasistencia);
@@ -42,6 +42,5 @@ public class InasistenciaController {
         if(inasistencia == null){return ResponseEntity.notFound().build();}
         return ResponseEntity.ok(inasistencia);
     }
-
 
 }
