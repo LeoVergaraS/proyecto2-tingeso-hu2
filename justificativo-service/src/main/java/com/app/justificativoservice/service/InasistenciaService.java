@@ -4,14 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.app.justificativoservice.entity.Inasistencia;
+import com.app.justificativoservice.models.IngresoSalida;
 import com.app.justificativoservice.repository.InasistenciaRepository;
 
 @Service
 public class InasistenciaService {
+
     @Autowired
     InasistenciaRepository inasistenciaRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public List<Inasistencia> obtenerInasistencias() {
         return inasistenciaRepository.findAll();
@@ -24,6 +30,26 @@ public class InasistenciaService {
     public Inasistencia guardarInasistencia(Inasistencia inasistencia) {
         Inasistencia nuevaInasistencia = inasistenciaRepository.save(inasistencia);
         return nuevaInasistencia;
+    }
+
+    public boolean guardarDelArchivo() {
+        List<IngresoSalida> inasistencias = restTemplate.getForObject("http://localhost:8001/inasistencias/inasistencias", List.class);
+        if(!inasistencias.isEmpty()){
+            String[] fechaSeparada = inasistencias.get(0).getFecha().toString().split("-");
+            int anio = Integer.valueOf(fechaSeparada[0]);
+            int mes = Integer.valueOf(fechaSeparada[1]);
+            for(IngresoSalida i:inasistencias){
+                Inasistencia inasistencia = inasistenciaRepository.findInasistenciaByRutFecha(i.getRutEmpleado(), mes, anio);
+                if(inasistencia == null){
+                    inasistenciaRepository.save(new Inasistencia(null, mes, anio, 1, 0, i.getRutEmpleado()));
+                }else{
+                    inasistencia.setCantidadDias(inasistencia.getCantidadDias()+1);
+                    inasistenciaRepository.save(inasistencia);
+                }
+            }
+            return true;
+        }
+        return false;
     }
     
     public Inasistencia obtenerInasistenciaPorEmpleadoYFecha(int mes, int anio, String rut){

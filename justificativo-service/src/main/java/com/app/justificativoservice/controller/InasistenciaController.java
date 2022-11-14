@@ -36,6 +36,15 @@ public class InasistenciaController {
         return ResponseEntity.ok(nuevInasistencia);
     }
 
+    @PostMapping("/file")
+    public ResponseEntity<String> createFromFile(){
+        boolean creado = inasistenciaService.guardarDelArchivo();
+        if(creado){
+            return ResponseEntity.ok("Inasistencias creadas");
+        }
+        return ResponseEntity.badRequest().body("No se pudieron crear las inasistencias");
+    }
+
     @GetMapping("/empleado/{rut}/mes/{mes}/anio/{anio}")
     public ResponseEntity<Inasistencia> getByEmpleadoFecha(@PathVariable("rut") String rut, @PathVariable("mes") int mes, @PathVariable("anio") int anio){
         Inasistencia inasistencia = inasistenciaService.obtenerInasistenciaPorEmpleadoYFecha(mes, anio, rut);
