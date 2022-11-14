@@ -16,8 +16,7 @@ public class InasistenciaService {
     @Autowired
     InasistenciaRepository inasistenciaRepository;
 
-    @Autowired
-    RestTemplate restTemplate;
+    RestTemplate restTemplate = new RestTemplate();
 
     public List<Inasistencia> obtenerInasistencias() {
         return inasistenciaRepository.findAll();
@@ -33,9 +32,9 @@ public class InasistenciaService {
     }
 
     public boolean guardarDelArchivo() {
-        List<IngresoSalida> inasistencias = restTemplate.getForObject("http://localhost:8001/inasistencias/inasistencias", List.class);
-        if(!inasistencias.isEmpty()){
-            String[] fechaSeparada = inasistencias.get(0).getFecha().toString().split("-");
+        IngresoSalida[] inasistencias = restTemplate.getForObject("http://localhost:8001/ingresosSalidas/inasistencias", IngresoSalida[].class);
+        if(inasistencias.length != 0){
+            String[] fechaSeparada = inasistencias[0].getFecha().toString().split("-");
             int anio = Integer.valueOf(fechaSeparada[0]);
             int mes = Integer.valueOf(fechaSeparada[1]);
             for(IngresoSalida i:inasistencias){
