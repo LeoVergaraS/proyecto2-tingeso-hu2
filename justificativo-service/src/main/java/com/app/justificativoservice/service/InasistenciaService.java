@@ -31,9 +31,17 @@ public class InasistenciaService {
         return nuevaInasistencia;
     }
 
+    public Integer verificarSiTieneInasistencias(int mes, int anio, String rut){
+        Inasistencia inasistencia = inasistenciaRepository.findInasistenciaByRutFecha(rut, mes, anio);
+        if(inasistencia != null){
+            return inasistencia.getCantidadDias() - inasistencia.getDiasJustificados();
+        }
+        return 0;
+    }
+
     public boolean guardarDelArchivo() {
         IngresoSalida[] inasistencias = restTemplate.getForObject("http://localhost:8001/ingresosSalidas/inasistencias", IngresoSalida[].class);
-        if(inasistencias.length != 0){
+        if(inasistencias != null && inasistencias.length != 0){
             String[] fechaSeparada = inasistencias[0].getFecha().toString().split("-");
             int anio = Integer.valueOf(fechaSeparada[0]);
             int mes = Integer.valueOf(fechaSeparada[1]);

@@ -30,6 +30,13 @@ public class InasistenciaController {
         return ResponseEntity.ok(inasistencia);
     }
 
+    @GetMapping("/verificar/{mes}/{anio}/{rut}")
+    public ResponseEntity<Integer> verificarInasistencias(@PathVariable("mes") int mes, @PathVariable("anio") int anio, @PathVariable("rut") String rut){
+        Integer inasistencias = inasistenciaService.verificarSiTieneInasistencias(mes, anio, rut);
+        if(inasistencias == null){return ResponseEntity.notFound().build();}
+        return ResponseEntity.ok(inasistencias);
+    }
+
     @PostMapping()
     public ResponseEntity<Inasistencia> create(@RequestBody Inasistencia inasistencia){
         Inasistencia nuevInasistencia = inasistenciaService.guardarInasistencia(inasistencia);
