@@ -52,7 +52,7 @@ public class InasistenciaController {
         return ResponseEntity.badRequest().body("No se pudieron crear las inasistencias");
     }
 
-    @GetMapping("/empleado/{rut}/mes/{mes}/anio/{anio}")
+    @GetMapping("/{rut}/{mes}/{anio}")
     public ResponseEntity<Inasistencia> getByEmpleadoFecha(@PathVariable("rut") String rut, @PathVariable("mes") int mes, @PathVariable("anio") int anio){
         Inasistencia inasistencia = inasistenciaService.obtenerInasistenciaPorEmpleadoYFecha(mes, anio, rut);
         if(inasistencia == null){return ResponseEntity.notFound().build();}
