@@ -84,6 +84,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>justificativo-service</finalName>
 	</build>
 
 </project>
